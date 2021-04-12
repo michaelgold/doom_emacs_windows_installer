@@ -1,4 +1,5 @@
 from elevate import elevate
+from font_lib import install_font
 from os.path import expanduser
 from os.path import realpath
 from os.path import dirname
@@ -11,16 +12,12 @@ import shutil
 import subprocess
 import sys
 
-from font_lib import install_font
-
-
 def install_emacs():
     print('Beginning file download with requests')
 
     emacs_download_url = config["emacs_download_url"]
     emacs_installer_file = home + '/Downloads/emacs-installer.exe'
-
-
+    
     request = requests.get(emacs_download_url)
     with open(emacs_installer_file, 'wb') as f:
         f.write(request.content)
