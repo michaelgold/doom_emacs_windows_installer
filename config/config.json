@@ -1,5 +1,4 @@
 {
-  "site_start_path": "c:/program files/Emacs/x86_64/share/emacs/site-lisp/",
   "emacs_download_url": "http://gnu.mirror.constant.com/emacs/windows/emacs-27/emacs-27.2-x86_64-installer.exe",
   "site_start_source": "config/site-start.el",
   "dot_spacemacs_source": "config/.spacemacs",
