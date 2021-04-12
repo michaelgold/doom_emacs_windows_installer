@@ -4,4 +4,4 @@
   (setenv "HOME" dir)
   (message (format "HOME location is %s" (getenv "HOME"))))
 
-(set-home-dir "c:/users/goldm/")
+(set-home-dir "C:/Users/goldm/")
