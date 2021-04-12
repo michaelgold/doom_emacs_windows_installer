@@ -3,9 +3,6 @@ from os.path import expanduser
 from os.path import realpath
 from os.path import dirname
 from pathlib import Path
-from pathlib import PurePosixPath
-from pathlib import PureWindowsPath
-from fontTools.ttLib import TTFont
 from zipfile import ZipFile
 import git
 import json
