@@ -4,7 +4,7 @@
 ## Installation
 ``` shell
 pip install -r requirements.txt
-python ./install_spacemacs
+python ./install_spacemacs.py
 ```
 **note** you will need to accept the prompt to run python.exe as administrator to install Emacs and the Source Code Pro fonts
 
