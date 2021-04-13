@@ -68,6 +68,12 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
+                                      ;; Aesthetics
+                                      doom-themes
+                                      org-bullets
+                                      olivetti
+                              
+                                  
                                       ;; org-kanban
                                       ;; org-pdfview
                                       ;; org-noter
@@ -146,8 +152,9 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
+                         doom-monokai-pro
                         ;; monokai
-                         spacemacs-dark
+                        ;; spacemacs-dark
                         ;; spacemacs-light
                          )
    ;; If non nil the cursor color matches the state color in GUI Emacs.
@@ -369,6 +376,47 @@ you should place your code here."
  (add-hook 'org-mode-hook (lambda () (org-autolist-mode)))
 
  (with-eval-after-load 'org
+
+   ;; hide properties in drawer from https://stackoverflow.com/questions/17478260/completely-hide-the-properties-drawer-in-org-mode
+    (require 'org)
+    
+    (defun org-cycle-hide-drawers (state)
+      "Re-hide all drawers after a visibility state change."
+      (when (and (derived-mode-p 'org-mode)
+                 (not (memq state '(overview folded contents))))
+        (save-excursion
+          (let* ((globalp (memq state '(contents all)))
+                 (beg (if globalp
+                        (point-min)
+                        (point)))
+                 (end (if globalp
+                        (point-max)
+                        (if (eq state 'children)
+                          (save-excursion
+                            (outline-next-heading)
+                            (point))
+                          (org-end-of-subtree t)))))
+            (goto-char beg)
+            (while (re-search-forward org-drawer-regexp end t)
+              (save-excursion
+                (beginning-of-line 1)
+                (when (looking-at org-drawer-regexp)
+                  (let* ((start (1- (match-beginning 0)))
+                         (limit
+                           (save-excursion
+                             (outline-next-heading)
+                               (point)))
+                         (msg (format
+                                (concat
+                                  "org-cycle-hide-drawers:  "
+                                  "`:END:`"
+                                  " line missing at position %s")
+                                (1+ start))))
+                    (if (re-search-forward "^[ \t]*:END:" limit t)
+                      (outline-flag-region start (point-at-eol) t)
+                      (user-error msg))))))))))
+
+
    (use-package org-super-agenda
      :config (org-super-agenda-mode)
 
