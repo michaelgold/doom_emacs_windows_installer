@@ -13,7 +13,7 @@ import subprocess
 import sys
 
 def install_emacs():
-    print('Beginning file download with requests')
+    print('Downloading Emacs installer. Please click next through the prompts...')
 
     emacs_download_url = config["emacs_download_url"]
     emacs_installer_file = home + '/Downloads/emacs-installer.exe'
