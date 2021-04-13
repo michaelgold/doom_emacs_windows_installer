@@ -1,4 +1,4 @@
-# Spacemacs 
+# Spacemacs Windows Installer
 ![spacemacs-windows.gif](spacemacs-windows.gif)
 
 ## Installation
