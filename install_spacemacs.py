@@ -57,12 +57,21 @@ def install_dot_spacemacs():
     '''
     copy `./config/.spacemacs` to `~/.spacemacs` 
     '''
-    print('Installing.spacemacs')
+    print('Installing .spacemacs')
     dot_spacemacs_source = config["dot_spacemacs_source"]
     dot_spacemacs_destination = home + "/.spacemacs"
     
     shutil.copyfile(dot_spacemacs_source, dot_spacemacs_destination)
 
+def copy_local_dotfile_to_repo():
+    '''
+    copy `~/.spacemacs` to `./config/.spacemacs`
+    '''
+    print('Copying ~/.spacemacs to ./congig/.spacemacs')
+    dot_spacemacs_source = home + "/.spacemacs"
+    dot_spacemacs_destination = config["dot_spacemacs_source"]
+
+    shutil.copyfile(dot_spacemacs_source, dot_spacemacs_destination)
 
 def clone_spacemacs_github_repo():
     print("Cloning spacemacs repo")
