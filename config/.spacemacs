@@ -46,7 +46,11 @@ values."
      ;; git
      ;; markdown
      (org :variables
-            org-want-todo-bindings t)
+            org-want-todo-bindings t
+            org-enable-bootstrap-support t
+            org-enable-reveal-js-support t
+            org-enable-trello-support t
+            org-enable-org-journal-support t)
      ;; org-brain
      ;; pdf-tools
      ;; (shell :variables
@@ -431,8 +435,7 @@ you should place your code here."
 ;;; checks if the category of the entry is in an exclude list and
 ;;; returns either t or nil to skip or include the entry.
 
-(setq browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program "chromium-browser")
+(setq browse-url-browser-function 'browse-url-default-windows-browser)
 
 (setq org-icalendar-use-scheduled '(todo-start event-if-todo))
 
@@ -493,9 +496,6 @@ you should place your code here."
                                "* %? [[%:link][%:description]] \nCaptured On: %U")
                               ))
 
-;; enable exporting to revealjs
-(setq-default dotspacemacs-configuration-layers
-      '((org :variables org-enable-reveal-js-support t)))
 
 ;; (setq org-want-todo-bindings t)
 (setq org-todo-keyword-faces
