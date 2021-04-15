@@ -463,6 +463,60 @@ you should place your code here."
      )
    )
 
+
+
+
+
+(setq org-agenda-custom-commands
+      '(("n" "Next View"
+         ((agenda "" ((org-agenda-span 'day)
+                      (org-super-agenda-groups
+                       '((:name "Today"
+                                :time-grid t
+                                :todo "TODAY"
+                                :scheduled today
+                                :order 0)
+                         (:habit t)
+                         (:name "Due Today"
+                                :deadline today
+                                :order 2)
+                         (:name "Due Soon"
+                                :deadline future
+                                :order 8)
+                         (:name "Overdue"
+                                :deadline past
+                                :order 7)
+                         ))))
+          (todo "" ((org-agenda-overriding-header "")
+                    (org-super-agenda-groups
+                     '((:name "Inbox"
+                              :file-path "inbox"
+                              :order 0
+                              )
+                       (:discard (:todo "TODO"
+                                        :todo "SOMEDAY"
+                                        :todo "BACKLOG") )
+                       (:auto-category t
+                                       :order 9)
+                       ))))))
+        ("t" "Todo View"
+         (
+          (todo "" ((org-agenda-overriding-header "")
+                    (org-super-agenda-groups
+                     '((:name "Inbox"
+                              :file-path "inbox"
+                              :order 0
+                              )
+                       (:discard (:todo "DOING"
+                                        :todo "NOW"))
+                       (:auto-category t
+                                       :order 9)
+                       ))))))
+        ))
+
+(org-super-agenda-mode)
+
+
  ;(setq org-agenda-todo-ignore-scheduled t)
  (setq org-deadline-warning-days 14)
 
@@ -493,9 +547,9 @@ you should place your code here."
                       (setq org-startup-indented t) ; Enable `org-indent-mode' by default
                       (add-hook 'org-mode-hook #'visual-line-mode)
 
-                      (setq org-agenda-custom-commands
-                            '(("X" agenda "" nil ("~/Dropbox/org/agenda.html")))
-                            )
+;;                      (setq org-agenda-custom-commands
+;;                            '(("X" agenda "" nil ("~/Dropbox/org/agenda.html")))
+;;                            )
                       )
 
 ;; (add-to-list 'org-file-apps '("\\.pdf\\'" . (lambda (file link) (org-pdfview-open link))))
@@ -607,3 +661,26 @@ you should place your code here."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:foreground "#DCDCCC" :background "#313131")))))
+(defun dotspacemacs/emacs-custom-settings ()
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization."
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ansi-color-names-vector
+   ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
+ '(evil-want-Y-yank-to-eol nil)
+ '(org-trello-current-prefix-keybinding "C-c o" nil (org-trello))
+ '(package-selected-packages
+   '(flycheck-pos-tip pos-tip flycheck yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode dash-functional helm-pydoc cython-mode company-anaconda anaconda-mode pythonic org-brain org-autolist org-super-agenda ht web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data darkula-theme org-noter org-attach-screenshot flyspell-popup flyspell-correct-helm flyspell-correct auto-dictionary interleave org-pdfview pdf-tools tablist org-kanban helm-company helm-c-yasnippet fuzzy company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download htmlize gnuplot ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:foreground "#DCDCCC" :background "#313131")))))
+)
