@@ -1,3 +1,3 @@
-from install_doom_emacs import install_configfiles 
+from install_doom_emacs import install_config_files 
 
 install_config_files()
