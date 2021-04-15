@@ -86,12 +86,11 @@ def copy_local_config_files_to_repo():
     # copytree fails if directory exists, so we'll remove it first
     copy_tree(doom_config_source, doom_config_destination)
 
-def clone_spacemacs_github_repo():
-    print("Cloning spacemacs repo")
-    spacemacs_git_url = "https://github.com/syl20bnr/spacemacs"
-    spacemacs_install_path = home + "/.emacs.d"
-
-    git.repo.base.Repo.clone_from(spacemacs_git_url, spacemacs_install_path)
+def clone_doom_emacs_github_repo():
+    print("Cloning doom emacs repo")
+    emacs_d_github_url = config["emacs_d_git_url"]
+    local_emacs_d_path = home + "/.emacs.d"
+    git.repo.base.Repo.clone_from(emacs_d_github_url, local_emacs_d_path)
 
 def install_source_code_pro_fonts():
     source_code_pro_download_url = config["source_code_pro_download_url"]
@@ -116,8 +115,8 @@ def main():
     install_emacs()
     install_site_start()
     install_config_files()
-    clone_spacemacs_github_repo()
-    install_source_code_pro_fonts()
+    clone_doom_emacs_github_repo()
+    # install_source_code_pro_fonts()
 
 base_path = dirname(realpath(__file__))
 home = expanduser("~")
