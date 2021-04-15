@@ -53,25 +53,25 @@ def install_site_start():
 
     shutil.copyfile(site_start_source, site_start_destination)
 
-def install_dot_spacemacs():
+def install_configfiles():
     '''
-    copy `./config/.spacemacs` to `~/.spacemacs` 
+    copy `./config/.doom.d` to `~/.doom.d` 
     '''
-    print('Installing .spacemacs')
-    dot_spacemacs_source = config["dot_spacemacs_source"]
-    dot_spacemacs_destination = home + "/.spacemacs"
+    print('Copying .doom.d to ~/.doom.d')
+    doom_config_source = config["doom_config_source"]
+    doom_config_destination = home + "/.spacemacs"
     
-    shutil.copyfile(dot_spacemacs_source, dot_spacemacs_destination)
+    shutil.copyfile(doom_config_source, doom_config_destination)
 
-def copy_local_dotfile_to_repo():
+def copy_local_config_files_to_repo():
     '''
-    copy `~/.spacemacs` to `./config/.spacemacs`
+    copy `~/.doom.d` to `./config/.doom.d`
     '''
-    print('Copying ~/.spacemacs to ./congig/.spacemacs')
-    dot_spacemacs_source = home + "/.spacemacs"
-    dot_spacemacs_destination = config["dot_spacemacs_source"]
+    print('Copying ~/.doom.d to ./config/.doom.d')
+    doom_config_source = home + "/.doom.d"
+    doom_config_destination = config["doom_config_source"]
 
-    shutil.copyfile(dot_spacemacs_source, dot_spacemacs_destination)
+    shutil.copyfile(doom_config_source, doom_config_destination)
 
 def clone_spacemacs_github_repo():
     print("Cloning spacemacs repo")

@@ -1,3 +1,3 @@
-from install_spacemacs import copy_local_dotfile_to_repo
+from install_spacemacs import copy_local_config_files_to_repo
 
-copy_local_dotfile_to_repo()
+copy_local_config_files_to_repo()

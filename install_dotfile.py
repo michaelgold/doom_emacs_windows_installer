@@ -1,3 +1,3 @@
-from install_spacemacs import install_dot_spacemacs 
+from install_doom_emacs import install_configfiles 
 
-install_dot_spacemacs()
+install_configfiles()
