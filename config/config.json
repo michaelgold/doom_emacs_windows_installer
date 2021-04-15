@@ -4,5 +4,17 @@
   "site_start_source": "config/site-start.el",
   "doom_config_source": "config/.doom.d/",
   "doom_cmd_source": "config/.emacs.d/bin/doom.cmd",
+  "dependencies": [
+    {
+      "dependency_name": "rg",
+      "download_url": "https://github.com/BurntSushi/ripgrep/releases/download/12.1.1/ripgrep-12.1.1-x86_64-pc-windows-msvc.zip",
+      "binary": "rg.exe"
+    },
+    {
+      "dependency_name": "fd",
+      "download_url": "https://github.com/sharkdp/fd/releases/download/v8.2.1/fd-v8.2.1-x86_64-pc-windows-msvc.zip",
+      "binary": "fd.exe"
+    }
+  ],
   "source_code_pro_download_url": "https://github.com/adobe-fonts/source-code-pro/releases/download/2.038R-ro%2F1.058R-it%2F1.018R-VAR/TTF-source-code-pro-2.038R-ro-1.058R-it.zip"
 }

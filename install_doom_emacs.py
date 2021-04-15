@@ -26,6 +26,34 @@ def install_emacs():
 
     subprocess.run([emacs_installer_file])
 
+def download_and_install_dependencies():
+    print('Downloading and installing dependencies.')
+
+    dependencies = config["dependencies"]
+    installation_path = home + "/AppData/Local/Microsoft/WindowsApps/"
+
+    for dependency in dependencies:
+        binary = dependency["binary"]
+        request = requests.get(dependency["download_url"])
+        downloaded_zip = home + "/Downloads/" + dependency["dependency_name"] + ".zip"
+        with open(downloaded_zip, 'wb') as f:
+            f.write(request.content)
+
+        extracted_path = home + "/Downloads/" + dependency["dependency_name"] + "/"
+
+        with ZipFile(downloaded_zip, "r") as f:
+            for name in f.namelist():
+                if binary in name:
+                    f.extract(name, path=extracted_path)
+                    extracted_binary_file = PureWindowsPath(extracted_path + name)
+                    file_destination = PureWindowsPath(installation_path + binary)
+                    try:
+                        shutil.copyfile(extracted_binary_file, file_destination)
+                        print("Installing {}".format(binary))
+                    except IOError as e:
+                        print("Unable to copy file. {}".format(e))
+                        input("Press enter to continue...")
+                    
 def update_home_path_in_site_start_file(site_start_source, home):
     '''
     use the logged in user's home path instead of the one listed in the config file
@@ -115,6 +143,7 @@ def main():
     install_emacs()
     install_site_start()
     install_config_files()
+    download_and_install_dependencies()
     clone_doom_emacs_github_repo()
     # install_source_code_pro_fonts()
 
