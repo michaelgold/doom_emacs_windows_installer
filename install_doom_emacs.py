@@ -54,6 +54,34 @@ def download_and_install_dependencies():
                         print("Unable to copy file. {}".format(e))
                         input("Press enter to continue...")
                     
+def symlink_binaries_to_appdata():
+    binaries = [
+        {
+            "symlink": PureWindowsPath(home + "/doom.cmd"),
+            "source": PureWindowsPath(home + "/.emacs.d/bin/doom.cmd")
+        },
+        {
+            "symlink": PureWindowsPath(home + "/doom"),
+            "source": PureWindowsPath(home + "/.emacs.d/bin/doom")
+        },
+        {
+            "symlink": PureWindowsPath(home + "/emacs.exe"),
+            "source": PureWindowsPath("C:/Program Files/Emacs/x86_64/bin/emacs.exe")
+        }
+    ]
+
+    for binary in binaries:
+        cmd = "mklink {} {}".format(binary["symlink"], binary["source"])
+        print(cmd)
+        subprocess.run([cmd])
+
+
+def run_doom_install():
+    cmd = "doom install"
+    print(cmd)
+    subprocess.run([cmd])
+
+
 def update_home_path_in_site_start_file(site_start_source, home):
     '''
     use the logged in user's home path instead of the one listed in the config file
@@ -98,8 +126,7 @@ def install_config_files():
     doom_config_destination = PureWindowsPath(home + "/.doom.d")
     
     copy_tree(doom_config_source, doom_config_destination)
-
-    doom_cmd_source = PureWindowsPath(["doom_cmd_src"])
+    doom_cmd_source = PureWindowsPath(config["doom_cmd_source"])
     doom_cmd_destinatin = PureWindowsPath(home + "/.emacs.d/bin")
     shutil.copyfile(doom_cmd_source, doom_cmd_destinatin)
 
@@ -109,14 +136,14 @@ def copy_local_config_files_to_repo():
     '''
     print('Copying ~/.doom.d to ./config/.doom.d')
     doom_config_source = PureWindowsPath(home + "/.doom.d/")
-    doom_config_destination = config["doom_config_source"]
+    doom_config_destination = config["doom_cmd_source"]
 
     # copytree fails if directory exists, so we'll remove it first
     copy_tree(doom_config_source, doom_config_destination)
 
 def clone_doom_emacs_github_repo():
     print("Cloning doom emacs repo")
-    emacs_d_github_url = config["emacs_d_git_url"]
+    emacs_d_github_url = config["emacs_d_github_url"]
     local_emacs_d_path = home + "/.emacs.d"
     git.repo.base.Repo.clone_from(emacs_d_github_url, local_emacs_d_path)
 
@@ -142,9 +169,11 @@ def main():
 
     install_emacs()
     install_site_start()
-    install_config_files()
     download_and_install_dependencies()
     clone_doom_emacs_github_repo()
+    install_config_files()
+    symlink_binaries_to_appdata()
+    run_doom_install()
     # install_source_code_pro_fonts()
 
 base_path = dirname(realpath(__file__))
