@@ -3,6 +3,7 @@ from font_helpers import install_font
 from os.path import dirname
 from os.path import expanduser
 from os.path import realpath
+from os.path import isdir
 from pathlib import Path
 from pathlib import PureWindowsPath
 from zipfile import ZipFile
@@ -54,15 +55,21 @@ def install_site_start():
 
     shutil.copyfile(site_start_source, site_start_destination)
 
+def copy_tree(source, destination):
+    # copytree fails if directory exists, so we'll remove it first
+    if isdir(destination):
+        shutil.rmtree(destination)
+    shutil.copytree(source, destination)
+
 def install_config_files():
     '''
     copy `./config/.doom.d` to `~/.doom.d` 
     '''
     print('Copying .doom.d to ~/.doom.d')
-    doom_config_source = config["doom_config_source"]
+    doom_config_source = PureWindowsPath(config["doom_config_source"])
     doom_config_destination = PureWindowsPath(home + "/.doom.d")
     
-    shutil.copyfile(doom_config_source, doom_config_destination)
+    copy_tree(doom_config_source, doom_config_destination)
 
 def copy_local_config_files_to_repo():
     '''
@@ -71,7 +78,9 @@ def copy_local_config_files_to_repo():
     print('Copying ~/.doom.d to ./config/.doom.d')
     doom_config_source = PureWindowsPath(home + "/.doom.d/")
     doom_config_destination = config["doom_config_source"]
-    shutil.copytree(doom_config_source, doom_config_destination)
+
+    # copytree fails if directory exists, so we'll remove it first
+    copy_tree(doom_config_source, doom_config_destination)
 
 def clone_spacemacs_github_repo():
     print("Cloning spacemacs repo")
