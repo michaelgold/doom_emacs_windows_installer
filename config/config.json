@@ -2,5 +2,6 @@
   "emacs_download_url": "http://gnu.mirror.constant.com/emacs/windows/emacs-27/emacs-27.2-x86_64-installer.exe",
   "site_start_source": "config/site-start.el",
   "doom_config_source": "config/.doom.d/",
+  "doom_cmd_source": "config/.emacs.d/bin/doom.cmd",
   "source_code_pro_download_url": "https://github.com/adobe-fonts/source-code-pro/releases/download/2.038R-ro%2F1.058R-it%2F1.018R-VAR/TTF-source-code-pro-2.038R-ro-1.058R-it.zip"
 }

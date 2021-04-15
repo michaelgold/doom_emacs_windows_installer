@@ -71,6 +71,10 @@ def install_config_files():
     
     copy_tree(doom_config_source, doom_config_destination)
 
+    doom_cmd_source = PureWindowsPath(["doom_cmd_src"])
+    doom_cmd_destinatin = PureWindowsPath(home + "/.emacs.d/bin")
+    shutil.copyfile(doom_cmd_source, doom_cmd_destinatin)
+
 def copy_local_config_files_to_repo():
     '''
     copy `~/.doom.d` to `./config/.doom.d`
@@ -111,7 +115,7 @@ def main():
 
     install_emacs()
     install_site_start()
-    install_dot_spacemacs()
+    install_config_files()
     clone_spacemacs_github_repo()
     install_source_code_pro_fonts()
 
