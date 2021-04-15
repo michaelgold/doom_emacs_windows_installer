@@ -4,6 +4,7 @@ from os.path import dirname
 from os.path import expanduser
 from os.path import realpath
 from pathlib import Path
+from pathlib import PureWindowsPath
 from zipfile import ZipFile
 import git
 import json
@@ -53,13 +54,13 @@ def install_site_start():
 
     shutil.copyfile(site_start_source, site_start_destination)
 
-def install_configfiles():
+def install_config_files():
     '''
     copy `./config/.doom.d` to `~/.doom.d` 
     '''
     print('Copying .doom.d to ~/.doom.d')
     doom_config_source = config["doom_config_source"]
-    doom_config_destination = home + "/.spacemacs"
+    doom_config_destination = PureWindowsPath(home + "/.doom.d")
     
     shutil.copyfile(doom_config_source, doom_config_destination)
 
@@ -68,10 +69,9 @@ def copy_local_config_files_to_repo():
     copy `~/.doom.d` to `./config/.doom.d`
     '''
     print('Copying ~/.doom.d to ./config/.doom.d')
-    doom_config_source = home + "/.doom.d"
+    doom_config_source = PureWindowsPath(home + "/.doom.d/")
     doom_config_destination = config["doom_config_source"]
-
-    shutil.copyfile(doom_config_source, doom_config_destination)
+    shutil.copytree(doom_config_source, doom_config_destination)
 
 def clone_spacemacs_github_repo():
     print("Cloning spacemacs repo")
