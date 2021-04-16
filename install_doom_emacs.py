@@ -176,7 +176,7 @@ def copy_local_config_files_to_repo():
     '''
     print('Copying ~/.doom.d to ./config/.doom.d')
     doom_config_source = PureWindowsPath(home + "/.doom.d/")
-    doom_config_destination = config["doom_cmd_source"]
+    doom_config_destination = config["doom_config_source"]
 
     # copytree fails if directory exists, so we'll remove it first
     copy_tree(doom_config_source, doom_config_destination)
