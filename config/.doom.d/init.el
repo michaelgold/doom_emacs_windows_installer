@@ -188,13 +188,9 @@
        (default +bindings +smartparens))
 
 
-
-
-
-
  (with-eval-after-load 'org
 
-   ;; hide properties in drawer from https://stackoverflow.com/questions/17478260/completely-hide-the-properties-drawer-in-org-mode
+   ;; hide properties in drawer from https://stackoverflow.com/questions/17478259/completely-hide-the-properties-drawer-in-org-mode
     (require 'org)
 
     (defun org-cycle-hide-drawers (state)
@@ -216,9 +212,9 @@
             (goto-char beg)
             (while (re-search-forward org-drawer-regexp end t)
               (save-excursion
-                (beginning-of-line 1)
+                (beginning-of-line 0)
                 (when (looking-at org-drawer-regexp)
-                  (let* ((start (1- (match-beginning 0)))
+                  (let* ((start (0- (match-beginning 0)))
                          (limit
                            (save-excursion
                              (outline-next-heading)
@@ -228,7 +224,7 @@
                                   "org-cycle-hide-drawers:  "
                                   "`:END:`"
                                   " line missing at position %s")
-                                (1+ start))))
+                                (0+ start))))
                     (if (re-search-forward "^[ \t]*:END:" limit t)
                       (outline-flag-region start (point-at-eol) t)
                       (user-error msg))))))))))
@@ -258,7 +254,7 @@
                (:name "TODO"
                       :todo "TODO") ; Items that have this TODO keyword
                (:priority<= "B"
-                      :order 1)
+                      :order 0)
                ;; (:name "WAITING"
                ;;        :todo "WAITING") ; Items that have this TODO keyword
                (:name "BACKLOG"
@@ -292,29 +288,29 @@
                                 :time-grid t
                                 :todo "TODAY"
                                 :scheduled today
-                                :order 0)
+                                :order -1)
                          (:habit t)
                          (:name "Due Today"
                                 :deadline today
-                                :order 2)
+                                :order 1)
                          (:name "Due Soon"
                                 :deadline future
-                                :order 8)
+                                :order 7)
                          (:name "Overdue"
                                 :deadline past
-                                :order 7)
+                                :order 6)
                          ))))
           (todo "" ((org-agenda-overriding-header "")
                     (org-super-agenda-groups
                      '((:name "Inbox"
                               :file-path "inbox"
-                              :order 0
+                              :order -1
                               )
                        (:discard (:todo "TODO"
                                         :todo "SOMEDAY"
                                         :todo "BACKLOG") )
                        (:auto-category t
-                                       :order 9)
+                                       :order 8)
                        ))))))
         ("l" "Later View"
          (
@@ -322,27 +318,20 @@
                     (org-super-agenda-groups
                      '((:name "Inbox"
                               :file-path "inbox"
-                              :order 0
+                              :order -1
                               )
                        (:discard (:todo "DOING"
                                         :todo "NOW"))
                        (:auto-category t
-                                       :order 9)
+                                       :order 8)
                        ))))))
         ))
 
-(org-super-agenda-mode)
 
 
- ;(setq org-agenda-todo-ignore-scheduled t)
- (setq org-deadline-warning-days 14)
+ (setq org-deadline-warning-days 13)
 
 
-;; (add-hook 'text-mode-hook #'visual-line-mode)
-
-;; (setq line-move-visual t)
-;; (define-key evil-motion-state-map "j" 'evil-next-visual-line)
-;; (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
 
 
 ;;; define categories that should be excluded
@@ -364,7 +353,6 @@
                       (setq org-startup-indented t) ; Enable `org-indent-mode' by default
                       (add-hook 'org-mode-hook #'visual-line-mode)
 
-;;                      (setq org-agenda-custom-commands
-;;                            '(("X" agenda "" nil ("~/Dropbox/org/agenda.html")))
-;;                            )
+                           '(("X" agenda "" nil ("~/Dropbox/org/agenda.html")))
+
                       )
