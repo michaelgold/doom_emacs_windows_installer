@@ -54,6 +54,7 @@
 ;; they are implemented.
 
 
+
 (after! evil-escape
   (setq evil-escape-key-sequence "fd")
   )
@@ -62,8 +63,14 @@
 
  (with-eval-after-load 'org
 
+   ;; use "t" to cycle through todo states
+   (define-key evil-normal-state-map (kbd "t") 'org-todo)
+
+
    ;; hide properties in drawer from https://stackoverflow.com/questions/17478259/completely-hide-the-properties-drawer-in-org-mode
     (require 'org)
+
+
 
     (defun org-cycle-hide-drawers (state)
       "Re-hide all drawers after a visibility state change."
@@ -228,3 +235,8 @@
                            '(("X" agenda "" nil ("~/Dropbox/org/agenda.html")))
 
                            )
+;; disable exit confirmation
+(setq confirm-kill-emacs nil)
+
+;; maximize window on startup
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
