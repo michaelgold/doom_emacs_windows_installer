@@ -57,6 +57,11 @@
 ;; NEW ICEBOX SOMEDAY BACKLOG TODO SPRINT SOON NOW DOING QA | DONE CANCELED
 
 
+
+
+
+
+
 (add-hook! 'doom-load-theme-hook
 
   (use-package hl-todo
@@ -96,13 +101,23 @@
   )
 
 
- (with-eval-after-load 'org
+
+   ;; fix unwanted key mapping on the header https://github.com/alphapapa/org-super-agenda/issues/50#issuecomment-817432643
+(setq org-super-agenda-header-map (make-sparse-keymap))
+
+;;(setq org-super-agenda-header-map evil-org-agenda-mode-map)
+
+
+
+(with-eval-after-load 'org
 
    ;; use "t" to cycle through todo states
    (define-key evil-normal-state-map (kbd "t") 'org-todo)
 
    ;; hide properties in drawer from https://stackoverflow.com/questions/17478259/completely-hide-the-properties-drawer-in-org-mode
-    (require 'org)
+   (require 'org)
+
+
 
     (defun org-cycle-hide-drawers (state)
       "Re-hide all drawers after a visibility state change."
@@ -144,6 +159,7 @@
    (use-package org-super-agenda
      :config (org-super-agenda-mode)
 
+
      (setq org-todo-keyword-faces
            '(
              ("DONE"       . (:foreground "#564a56"))
@@ -169,6 +185,8 @@
                       :todo "NEW")
                (:name "OVERDUE"
                       :deadline past)
+               (:name "QA"
+                      :todo "QA") ; Items that have this TODO keyword
                (:name "DOING"
                       :todo "DOING")
                (:name "NOW"
@@ -177,8 +195,8 @@
                (:name "SOON"
                       :deadline future
                       :todo "SOON")
-               (:name "QA"
-                      :todo "QA") ; Items that have this TODO keyword
+               (:name "SPRINT"
+                      :todo "SPRINT") ; Items that have this TODO keyword
                (:name "TODO"
                       :todo "TODO") ; Items that have this TODO keyword
                (:priority<= "B"
