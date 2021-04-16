@@ -16,5 +16,6 @@
       "binary": "fd.exe"
     }
   ],
-  "source_code_pro_download_url": "https://github.com/adobe-fonts/source-code-pro/releases/download/2.038R-ro%2F1.058R-it%2F1.018R-VAR/TTF-source-code-pro-2.038R-ro-1.058R-it.zip"
+  "source_code_pro_download_url": "https://github.com/adobe-fonts/source-code-pro/releases/download/2.038R-ro%2F1.058R-it%2F1.018R-VAR/TTF-source-code-pro-2.038R-ro-1.058R-it.zip",
+  "all_the_icons_download_url": "https://github.com/domtronn/all-the-icons.el/archive/refs/tags/4.0.1.zip"
 }

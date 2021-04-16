@@ -192,16 +192,16 @@ def clone_doom_emacs_github_repo():
         print("Unable to clone repo. {}".format(e))
         input("Press enter to continue...")
 
-def install_source_code_pro_fonts():
-    source_code_pro_download_url = config["source_code_pro_download_url"]
-    source_code_pro_download_file = home + '/Downloads/source_code_pro_fonts.zip'
-    request = requests.get(source_code_pro_download_url)
-    with open(source_code_pro_download_file, 'wb') as f:
+def install_fonts():
+    font_download_url = config["all_the_icons_download_url"]
+    font_download_file = home + '/Downloads/icon_fonts.zip'
+    request = requests.get(font_download_url)
+    with open(font_download_file, 'wb') as f:
         f.write(request.content)
 
-    font_path = home + "/Downloads/source_code_pro/"
+    font_path = home + "/Downloads/icon_fonts/
 
-    with ZipFile(source_code_pro_download_file, "r") as f:
+    with ZipFile(font_download_file, "r") as f:
         for name in f.namelist():
             if ".ttf" in name:
                 print("Installing {}".format(name))
@@ -212,18 +212,18 @@ def main():
     # doom_binary = PureWindowsPath(home + "/.emacs.d/bin/doom.cmd")
     # run in admin mode so we can install emacs and symlinks to binaries
     elevate()
-    install_emacs()
-    install_site_start()
-    download_and_install_dependencies()
-    clone_doom_emacs_github_repo()
-    install_custom_doom_cmd()
-    symlink_binaries_to_appdata()
+    # install_emacs()
+    # install_site_start()
+    # download_and_install_dependencies()
+    # clone_doom_emacs_github_repo()
+    # install_custom_doom_cmd()
+    # symlink_binaries_to_appdata()
     # run_doom_env()
-    run_doom_install()
-    install_config_files()
-    run_doom_sync()
+    # run_doom_install()
+    # install_config_files()
+    # run_doom_sync()
 
-    # install_source_code_pro_fonts()
+    install_fonts()
 
 base_path = dirname(realpath(__file__))
 home = expanduser("~")
