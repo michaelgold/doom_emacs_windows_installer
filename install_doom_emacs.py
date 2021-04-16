@@ -1,5 +1,7 @@
 from elevate import elevate
 from font_helpers import install_font
+from os import chmod
+from os import symlink
 from os.path import dirname
 from os.path import expanduser
 from os.path import realpath
@@ -12,6 +14,7 @@ import json
 import requests
 import shutil
 import subprocess
+import stat
 import sys
 
 def install_emacs():
@@ -55,32 +58,47 @@ def download_and_install_dependencies():
                         input("Press enter to continue...")
                     
 def symlink_binaries_to_appdata():
+    windows_apps_path = home + "/AppData/Local/Microsoft/WindowsApps"
     binaries = [
         {
-            "symlink": PureWindowsPath(home + "/doom.cmd"),
+            "symlink": PureWindowsPath(windows_apps_path + "/doom.cmd"),
             "source": PureWindowsPath(home + "/.emacs.d/bin/doom.cmd")
         },
         {
-            "symlink": PureWindowsPath(home + "/doom"),
+            "symlink": PureWindowsPath(windows_apps_path + "/doom"),
             "source": PureWindowsPath(home + "/.emacs.d/bin/doom")
-        },
-        {
-            "symlink": PureWindowsPath(home + "/emacs.exe"),
-            "source": PureWindowsPath("C:/Program Files/Emacs/x86_64/bin/emacs.exe")
         }
     ]
 
     for binary in binaries:
-        cmd = "mklink {} {}".format(binary["symlink"], binary["source"])
-        print(cmd)
-        subprocess.run([cmd])
+        try:
+            symlink(binary["source"], binary["symlink"])
+        except IOError as e:
+            print("Unable to symlink file. {}".format(e))
+            input("Press enter to continue...")
+        
+def run_doom_env():
+    myenv_path = PureWindowsPath(home + "/.doom.d/myenv")
+    try:
+        subprocess.run(["doom.cmd", "env", "-o", myenv_path], capture_output=True)
+    except IOError as e:
+        print("Unable to create the doom env. {}".format(e))
+        input("Press enter to continue...")
 
 
 def run_doom_install():
-    cmd = "doom install"
-    print(cmd)
-    subprocess.run([cmd])
+    try:
+        subprocess.run(["doom.cmd", "install"])
+    except IOError as e:
+        print("Unable to run doom install. {}".format(e))
+        input("Press enter to continue...")
 
+def run_doom_sync():
+    try:
+        subprocess.run(["doom.cmd", "sync"])
+    except IOError as e:
+        print("Unable to run doom sync. {}".format(e))
+        input("Press enter to continue...")
 
 def update_home_path_in_site_start_file(site_start_source, home):
     '''
@@ -111,11 +129,36 @@ def install_site_start():
 
     shutil.copyfile(site_start_source, site_start_destination)
 
+def remove_readonly(func, path, excinfo):
+    chmod(path, stat.S_IWRITE)
+    func(path)
+
+def remove_dir_if_exists(dir):
+    if isdir(dir):
+        shutil.rmtree(dir, onerror=remove_readonly)
+
 def copy_tree(source, destination):
     # copytree fails if directory exists, so we'll remove it first
-    if isdir(destination):
-        shutil.rmtree(destination)
-    shutil.copytree(source, destination)
+    remove_dir_if_exists(destination)
+    try:
+        shutil.copytree(source, destination)
+    except IOError as e:
+        print("Unable to copy file. {}".format(e))
+        input("Press enter to continue...")
+
+def install_custom_doom_cmd():
+    '''
+    Copy `config/.emacs.d/bin/doom.cmd` to `~/.emacs.d/bin`
+    '''
+    doom_cmd_source = PureWindowsPath(config["doom_cmd_source"])
+    doom_cmd_destination = PureWindowsPath(home + "/.emacs.d/bin/doom.cmd")
+
+    print('Copying config/.emacs.d/bin/doom.cmd to ~/.emacs.d/bin')
+    try:
+        shutil.copyfile(doom_cmd_source, doom_cmd_destination)
+    except IOError as e:
+        print("Unable to copy file. {}".format(e))
+        input("Press enter to continue...")
 
 def install_config_files():
     '''
@@ -126,9 +169,6 @@ def install_config_files():
     doom_config_destination = PureWindowsPath(home + "/.doom.d")
     
     copy_tree(doom_config_source, doom_config_destination)
-    doom_cmd_source = PureWindowsPath(config["doom_cmd_source"])
-    doom_cmd_destinatin = PureWindowsPath(home + "/.emacs.d/bin")
-    shutil.copyfile(doom_cmd_source, doom_cmd_destinatin)
 
 def copy_local_config_files_to_repo():
     '''
@@ -144,8 +184,13 @@ def copy_local_config_files_to_repo():
 def clone_doom_emacs_github_repo():
     print("Cloning doom emacs repo")
     emacs_d_github_url = config["emacs_d_github_url"]
-    local_emacs_d_path = home + "/.emacs.d"
-    git.repo.base.Repo.clone_from(emacs_d_github_url, local_emacs_d_path)
+    local_emacs_d_path = PureWindowsPath(home + "/.emacs.d")
+    remove_dir_if_exists(local_emacs_d_path)
+    try:
+        git.repo.base.Repo.clone_from(emacs_d_github_url, local_emacs_d_path)
+    except IOError as e:
+        print("Unable to clone repo. {}".format(e))
+        input("Press enter to continue...")
 
 def install_source_code_pro_fonts():
     source_code_pro_download_url = config["source_code_pro_download_url"]
@@ -164,16 +209,20 @@ def install_source_code_pro_fonts():
                 install_font(font_path + name)
 
 def main():
+    # doom_binary = PureWindowsPath(home + "/.emacs.d/bin/doom.cmd")
     # run in admin mode so we can install emacs and fonts
-    elevate()
-
+    # elevate()
     install_emacs()
     install_site_start()
     download_and_install_dependencies()
     clone_doom_emacs_github_repo()
-    install_config_files()
+    install_custom_doom_cmd()
     symlink_binaries_to_appdata()
+    # run_doom_env()
     run_doom_install()
+    install_config_files()
+    run_doom_sync()
+
     # install_source_code_pro_fonts()
 
 base_path = dirname(realpath(__file__))
