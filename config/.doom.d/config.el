@@ -88,13 +88,12 @@
             ("NEW"        . "#5bbc6d")
             )
           ))
-)
+  )
+
 
 (after! evil-escape
   (setq evil-escape-key-sequence "fd")
   )
-
-
 
 
  (with-eval-after-load 'org
@@ -102,11 +101,8 @@
    ;; use "t" to cycle through todo states
    (define-key evil-normal-state-map (kbd "t") 'org-todo)
 
-
    ;; hide properties in drawer from https://stackoverflow.com/questions/17478259/completely-hide-the-properties-drawer-in-org-mode
     (require 'org)
-
-
 
     (defun org-cycle-hide-drawers (state)
       "Re-hide all drawers after a visibility state change."
@@ -147,6 +143,23 @@
 
    (use-package org-super-agenda
      :config (org-super-agenda-mode)
+
+     (setq org-todo-keyword-faces
+           '(
+             ("DONE"       . (:foreground "#564a56"))
+             ("CANCELED"   . (:foreground "#564a56"))
+             ("ICEBOX"     . (:foreground "#5b5266"))
+             ("SOMEDAY"    . (:foreground "#5a5b77"))
+             ("BACKLOG"    . (:foreground "#536689"))
+             ("TODO"       . (:foreground "#427298"))
+             ("SPRINT"     . (:foreground "#227ea3"))
+             ("SOON"       . (:foreground "#008ba8"))
+             ("NOW"        . (:foreground "#0096a7"))
+             ("DOING"      . (:foreground "#00a2a0"))
+             ("QA"         . (:foreground "#00ac93"))
+             ("NEW"        . (:foreground "#5bbc6d"))
+             )
+        )
 
      (setq org-super-agenda-groups
 
@@ -190,19 +203,6 @@
        )
      )
    )
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 (setq org-agenda-custom-commands
