@@ -53,11 +53,47 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
+;; faces from https://colordesigner.io/gradient-generator
+;; NEW ICEBOX SOMEDAY BACKLOG TODO SPRINT SOON NOW DOING QA | DONE CANCELED
 
+
+(add-hook! 'doom-load-theme-hook
+
+  (use-package hl-todo
+    ;; :hook (org-mode . hl-todo-mode)
+    ;; :hook (prog-mode . hl-todo-mode)
+    :ensure t
+    :custom-face
+    (hl-todo ((t (:inherit hl-todo :italic t))))
+    :hook ((prog-mode        . hl-todo-mode)
+           (org-agenda-mode  . hl-todo-mode)
+           (org-super-agenda-mode  . hl-todo-mode)
+           (org-mode         . hl-todo-mode)
+           )
+    :config
+    (setq hl-todo-highlight-punctuation ":"
+          hl-todo-keyword-faces
+          `(
+            ("DONE"       . "#564a56")
+            ("CANCELED"   . "#564a56")
+            ("ICEBOX"     . "#5b5266")
+            ("SOMEDAY"    . "#5a5b77")
+            ("BACKLOG"    . "#536689")
+            ("TODO"       . "#427298")
+            ("SPRINT"     . "#227ea3")
+            ("SOON"       . "#008ba8")
+            ("NOW"        . "#0096a7")
+            ("DOING"      . "#00a2a0")
+            ("QA"         . "#00ac93")
+            ("NEW"        . "#5bbc6d")
+            )
+          ))
+)
 
 (after! evil-escape
   (setq evil-escape-key-sequence "fd")
   )
+
 
 
 
@@ -154,6 +190,16 @@
        )
      )
    )
+
+
+
+
+
+
+
+
+
+
 
 
 
