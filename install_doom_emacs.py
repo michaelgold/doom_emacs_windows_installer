@@ -199,7 +199,7 @@ def install_fonts():
     with open(font_download_file, 'wb') as f:
         f.write(request.content)
 
-    font_path = home + "/Downloads/icon_fonts/
+    font_path = home + "/Downloads/icon_fonts/"
 
     with ZipFile(font_download_file, "r") as f:
         for name in f.namelist():
