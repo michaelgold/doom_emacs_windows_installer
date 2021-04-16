@@ -210,8 +210,8 @@ def install_source_code_pro_fonts():
 
 def main():
     # doom_binary = PureWindowsPath(home + "/.emacs.d/bin/doom.cmd")
-    # run in admin mode so we can install emacs and fonts
-    # elevate()
+    # run in admin mode so we can install emacs and symlinks to binaries
+    elevate()
     install_emacs()
     install_site_start()
     download_and_install_dependencies()
