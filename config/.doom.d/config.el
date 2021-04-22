@@ -35,6 +35,23 @@
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
 
+;; view logged tasks by default
+(setq org-agenda-start-with-log-mode '(closed clock state))
+
+;; prompt for note after clocking out
+(setq org-log-note-clock-out t)
+
+(after! org (setq org-log-into-drawer t
+                  org-log-done 'time
+                  org-log-repeat 'time
+                  org-log-redeadline 'note
+                  org-log-reschedule 'note
+                  ))
+
+(setq org-todo-keywords
+      '((sequence "NEW(!)" "ICEBOX" "SOMEDAY" "BACKLOG(!)" "TODO" "SPRINT(!)" "SOON(!)" "NOW(!)" "DOING(!)" "QA(!)" | "DONE(!)" "CANCELED(!)"
+        )))
+
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
