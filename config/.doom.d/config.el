@@ -31,7 +31,10 @@
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/Dropbox/org/")
 
-;; This determines the style of line numbers in effect. If set to `nil', line
+;; use  the root org-directory for org-roam
+(setq org-roam-directory org-directory)
+
+;; aThis determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
 
