@@ -9,7 +9,7 @@ Install Python 3 on Windows. We recommend [Miniconda](https://conda.io/miniconda
 pip install -r requirements.txt
 python ./install_doom_emacs.py
 ```
-**note** you will need to accept the prompt to run python.exe as administrator to install Emacs and the Source Code Pro fonts
+**note** you will need to accept the prompt to run python.exe as administrator to install Emacs and the All the Icons fonts
 
 ## What this script does
 
