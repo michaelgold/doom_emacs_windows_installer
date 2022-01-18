@@ -122,6 +122,7 @@
   )
 
 
+(global-set-key (kbd "M-RET") 'toggle-frame-fullscreen)
 
 ;; fix unwanted key mapping on the header https://github.com/alphapapa/org-super-agenda/issues/50#issuecomment-817432643
 (setq org-super-agenda-header-map (make-sparse-keymap))
