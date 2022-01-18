@@ -13,7 +13,8 @@ dir_path = PureWindowsPath(os.path.join(home, '.emacs.d/.local/'))
 print(dir_path)
 
 try:
-    os.chmod(dir_path, stat.S_IWUSR, stat.S_IWRITE) #take ownership
+    os.chmod(dir_path, stat.S_IWUSR) #take ownership
+    os.chmod(dir_path, stat.S_IWRITE) #make writeable
     shutil.rmtree(dir_path)
 except OSError as e:
     print("Error: %s : %s" % (dir_path, e.strerror))
